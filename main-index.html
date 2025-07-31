@@ -1,0 +1,486 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+47
+ <head>
+<link rel="icon" type="image/png" href="{% static 'adminstatic/heart.jpg' %}">
+ <title>Healthy Heart-Rate Risk Prediction</title>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+ <link
+href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,90
+0" rel="stylesheet">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/open-iconic-bootstrap.min.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/animate.css' %}">
+
+ <link rel="stylesheet" href="{% static 'mainstatic/css/owl.carousel.min.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/owl.theme.default.min.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/magnific-popup.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/aos.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/ionicons.min.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/bootstrap-datepicker.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/jquery.timepicker.css' %}">
+
+ <link rel="stylesheet" href="{% static 'mainstatic/css/flaticon.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/icomoon.css' %}">
+ <link rel="stylesheet" href="{% static 'mainstatic/css/style.css' %}">
+ <link rel="stylesheet"
+ href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+48
+ integrity="sha384-
+Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+ crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+ integrity="sha384-
+cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+ crossorigin="anonymous"></script>
+ <link rel="stylesheet"
+ href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+ integrity="sha384-
+rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+ crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+ integrity="sha384-
+kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+ crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ </head>
+ <body>
+{% if messages %}
+ {% for message in messages %}
+ {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+ <script>swal({
+ title: "Success!",
+ text: "{{message}}",
+ icon: "success",
+ button: "OK",
+ });
+ </script>
+
+ {% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+ <script>swal({
+ title: "Warning :)",
+49
+ text: "{{message}}",
+ icon: "warning",
+ button: "OK",
+
+ });
+ </script>
+ {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+ <script>swal({
+ title: "info :)",
+ text: "{{message}}",
+ icon: "info",
+ button: "OK",
+ });
+ </script>
+ {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+ <script>swal({
+ title: "error :)",
+ text: "{{message}}",
+ icon: "error",
+ button: "OK",
+ });
+ </script>
+ {% endif %}
+ {% endfor %}
+ {% endif %}
+<nav style="height: 100px;" class="navbar navbar-expand-lg navbar-light bg-light ftco-navbarlight" id="ftco-navbar">
+ <div class="container d-flex align-items-center">
+<!-- <button class="navbar-toggler" type="button" data-toggle="collapse"
+data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle
+navigation">
+ <span class="oi oi-menu"></span>
+ </button> -->
+50
+ <div class="collapse navbar-collapse" id="ftco-nav"><div class="col-lg-2 pr-4 align-itemscenter">
+<a style="font-size: 42px; color:skyblue" class="navbar-brand" href="{% url
+'home' %}"><span style="color:skyblue" class="">HDSP</span>
+<svg style="color: red;" xmlns="http://www.w3.org/2000/svg"
+width="25" height="25" fill="currentColor" class="bi bi-heart-pulse-fill" viewBox="0 0 16 16">
+ <path d="M1.475 9C2.702 10.84 4.779 12.871 8 15c3.221-2.129 5.298-4.16 6.525-
+6H12a.5.5 0 0 1-.464-.314l-1.457-3.642-1.598 5.593a.5.5 0 0 1-.945.049L5.889 6.568l-1.473
+2.21A.5.5 0 0 1 4 9H1.475Z"/>
+ <path d="M.88 8C-2.427 1.68 4.41-2 7.823 1.143c.06.055.119.112.176.171a3.12 3.12 0
+0 1 .176-.17C11.59-2 18.426 1.68 15.12 8h-2.783l-1.874-4.686a.5.5 0 0 0-.945.049L7.921 8.956
+6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.88Z"/>
+ </svg>
+ </a>
+ </div>
+ <ul class="navbar-nav mr-auto" style="margin-left:25rem">
+ <li class="nav-item active"><a style="font-size: 20px;" href="{% url 'home' %}"
+class="nav-link pl-0">Home</a></li>
+ <li class="nav-item"><a style="font-size: 20px;" href="{% url 'login' %}" class="navlink">User</a></li>
+ <li class="nav-item"><a style="font-size: 20px;" href="{% url 'admin' %}" class="navlink">Admin</a></li>
+ <li class="nav-item"><a style="font-size: 20px;" href="{% url 'about' %}" class="navlink">About</a></li>
+ <li class="nav-item"><a style="font-size: 20px;" href="{% url 'contact' %}" class="navlink">Contact</a></li>
+ </ul>
+ </div>
+ </div>
+ </nav>
+ <!-- END nav -->
+
+ <section class="home-slider owl-carousel">
+51
+ <div class="slider-item" style="background-image:url({% static 'mainstatic/images/bg_1.jpg'
+%});" data-stellar-background-ratio="0.5">
+ <div class="overlay"></div>
+ <div class="container">
+ <div class="row no-gutters slider-text align-items-center justify-content-start" datascrollax-parent="true">
+ <div class="col-md-6 text ftco-animate">
+ <h1 class="mb-4">Helping Your <span>Stay Happy One</span></h1>
+ <h3 class="subheading">Everyday We Bring Hope and Smile to the Patient We
+Serve</h3>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div class="slider-item" style="background-image:url({% static 'mainstatic/images/bg_2.jpg'
+%});">
+ <div class="overlay"></div>
+ <div class="container">
+ <div class="row no-gutters slider-text align-items-center justify-content-start" datascrollax-parent="true">
+<div class="col-md-6 text ftco-animate">
+<h1 class="mb-4">We Care <span>About Your Health</span></h1>
+<h3 class="subheading">Your Health is Our Top Priority with
+Comprehensive, Affordable medical.</h3>
+</div>
+ </div>
+ </div>
+ </div>
+ </section>
+ <section class=" col-12 my-5 " style="color:white;">
+<div class="container card bg-primary d-flex">
+<div class="row no-gutters">
+52
+<div class="col-3 d-flex services align-self-stretch p-4 ftcoanimate">
+<div class="media block-6 d-block text-center">
+<div class="icon d-flex justify-content-center
+align-items-center" style="font-size:55px;">
+<span class="flaticondoctor"></span>
+</div>
+<div class="media-body p-2 mt-3">
+<h3 class="heading">Qualified
+Doctors</h3>
+<p>Even the all-powerful Pointing has no
+control about the blind texts it is an almost unorthographic.</p>
+</div>
+</div>
+</div>
+<div class="col-md-3 d-flex services align-self-stretch p-4 ftcoanimate">
+<div class="media block-6 d-block text-center">
+<div class="icon d-flex justify-content-center
+align-items-center"style="font-size:55px;">
+<span class="flaticon-ambulance"></span>
+</div>
+<div class="media-body p-2 mt-3">
+<h3 class="heading">Emergency
+Care</h3>
+<p>Even the all-powerful Pointing has no
+control about the blind texts it is an almost unorthographic.</p>
+</div>
+</div>
+</div>
+<div class="col-md-3 d-flex services align-self-stretch p-4 ftcoanimate">
+<div class="media block-6 d-block text-center">
+53
+<div class="icon d-flex justify-content-center
+align-items-center"style="font-size:55px;">
+<span class="flaticonstethoscope"></span>
+</div>
+<div class="media-body p-2 mt-3">
+<h3 class="heading">Outdoor
+Checkup</h3>
+<p>Even the all-powerful Pointing has no
+control about the blind texts it is an almost unorthographic.</p>
+</div>
+</div>
+</div>
+<div class="col-md-3 d-flex services align-self-stretch p-4 ftcoanimate">
+<div class="media block-6 d-block text-center">
+<div class="icon d-flex justify-content-center
+align-items-center"style="font-size:55px;">
+<span class="flaticon-24-hours"></span>
+</div>
+<div class="media-body p-2 mt-3">
+<h3 class="heading">24 Hours
+Service</h3>
+<p>Even the all-powerful Pointing has no
+control about the blind texts it is an almost unorthographic.</p>
+</div>
+</div>
+</div>
+ </div>
+</div>
+</section>
+<section class="ftco-section ftco-no-pt">
+<div class="container">
+54
+<div class="row justify-content-center mb-5 pb-2">
+<div class="col-md-8 text-center heading-section ftco-animate">
+<span class="subheading">Doctors</span>
+<h2 class="mb-4">Our Qualified Doctors</h2>
+<p>Separated they live in. A small river named Duden
+flows by their place and supplies it with the necessary regelialia. It is a paradisematic
+country</p>
+</div>
+</div>
+<div class="row">
+<div class="col-md-6 col-lg-3 ftco-animate">
+<div class="staff">
+<div class="img-wrap d-flex align-items-stretch">
+<div class="img align-self-stretch"
+style="background-image: url({% static 'mainstatic/images/doc-1.jpg' %});"></div>
+</div>
+<div class="text pt-3 text-center">
+<h3>Dr. Lloyd Wilson</h3>
+<span class="position mb2">Neurologist</span>
+<div class="faded">
+<p>I am an ambitious workaholic,
+but apart from that, pretty simple person.</p>
+ </div>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-3 ftco-animate">
+<div class="staff">
+<div class="img-wrap d-flex align-items-stretch">
+<div class="img align-self-stretch"
+style="background-image: url({% static 'mainstatic/images/doc-2.jpg' %});"></div>
+</div>
+<div class="text pt-3 text-center">
+55
+<h3>Dr. Rachel Parker</h3>
+<span class="position mb2">Ophthalmologist</span>
+<div class="faded">
+<p>I am an ambitious
+workaholic, but apart from that, pretty simple person.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-3 ftco-animate">
+<div class="staff">
+<div class="img-wrap d-flex align-items-stretch">
+<div class="img align-self-stretch"
+style="background-image: url({% static 'mainstatic/images/doc-3.jpg' %});"></div>
+</div>
+<div class="text pt-3 text-center">
+<h3>Dr. Ian Smith</h3>
+<span class="position mb2">Dentist</span>
+<div class="faded">
+<p>I am an ambitious workaholic,
+but apart from that, pretty simple person.</p>
+ </div>
+</div>
+</div>
+</div>
+<div class="col-md-6 col-lg-3 ftco-animate">
+<div class="staff">
+<div class="img-wrap d-flex align-items-stretch">
+<div class="img align-self-stretch"
+style="background-image: url({% static 'mainstatic/images/doc-4.jpg' %});"></div>
+</div>
+<div class="text pt-3 text-center">
+56
+<h3>Dr. Alicia Henderson</h3>
+<span class="position mb2">Pediatrician</span>
+<div class="faded">
+<p>I am an ambitious workaholic,
+but apart from that, pretty simple person.</p>
+ </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+ <section class="ftco-section testimony-section bg-light">
+ <div class="container">
+ <div class="row justify-content-center mb-5 pb-2">
+ <div class="col-md-8 text-center heading-section ftco-animate">
+ <span class="subheading">Testimonials</span>
+ <h2 class="mb-4">Our Patients Says About Us</h2>
+ <p>Separated they live in. A small river named Duden flows by their place and supplies it
+with the necessary regelialia. It is a paradisematic country</p>
+ </div>
+ </div>
+ <div class="row ftco-animate justify-content-center">
+ <div class="col-md-8">
+ <div class="carousel-testimony owl-carousel">
+ <div class="item">
+ <div class="testimony-wrap d-flex">
+ <div class="user-img mr-4" style="background-image: url({% static
+'mainstatic/images/person_1.jpg' %})">
+ </div>
+ <div class="text ml-2 bg-light">
+ <span class="quote d-flex align-items-center justify-content-center">
+57
+ <i class="icon-quote-left"></i>
+ </span>
+ <p>Far far away, behind the word mountains, far from the countries Vokalia and
+Consonantia, there live the blind texts.</p>
+ <p class="name">Racky Henderson</p>
+ <span class="position">Farmer</span>
+ </div>
+ </div>
+ </div>
+ <div class="item">
+ <div class="testimony-wrap d-flex">
+ <div class="user-img mr-4" style="background-image: url({% static
+'mainstatic/images/person_2.jpg' %})">
+ </div>
+ <div class="text ml-2 bg-light">
+ <span class="quote d-flex align-items-center justify-content-center">
+ <i class="icon-quote-left"></i>
+ </span>
+ <p>Far far away, behind the word mountains, far from the countries Vokalia and
+Consonantia, there live the blind texts.</p>
+ <p class="name">Henry Dee</p>
+ <span class="position">Businessman</span>
+ </div>
+ </div>
+ </div>
+ <div class="item">
+ <div class="testimony-wrap d-flex">
+ <div class="user-img mr-4" style="background-image: url({% static
+'mainstatic/images/person_3.jpg' %})">
+ </div>
+ <div class="text ml-2 bg-light">
+ <span class="quote d-flex align-items-center justify-content-center">
+ <i class="icon-quote-left"></i>
+ </span>
+58
+ <p>Far far away, behind the word mountains, far from the countries Vokalia and
+Consonantia, there live the blind texts.</p>
+ <p class="name">Mark Huff</p>
+ <span class="position">Students</span>
+ </div>
+ </div>
+ </div>
+ <div class="item">
+ <div class="testimony-wrap d-flex">
+ <div class="user-img mr-4" style="background-image: url({% static
+'mainstatic/images/person_4.jpg' %})">
+ </div>
+ <div class="text ml-2 bg-light">
+ <span class="quote d-flex align-items-center justify-content-center">
+ <i class="icon-quote-left"></i>
+ </span>
+ <p>Far far away, behind the word mountains, far from the countries Vokalia and
+Consonantia, there live the blind texts.</p>
+ <p class="name">Rodel Golez</p>
+ <span class="position">Striper</span>
+ </div>
+ </div>
+ </div>
+ <div class="item">
+ <div class="testimony-wrap d-flex">
+ <div class="user-img mr-4" style="background-image: url({% static
+'mainstatic/images/person_1.jpg' %})">
+ </div>
+ <div class="text ml-2 bg-light">
+ <span class="quote d-flex align-items-center justify-content-center">
+ <i class="icon-quote-left"></i>
+ </span>
+ <p>Far far away, behind the word mountains, far from the countries Vokalia and
+Consonantia, there live the blind texts.</p>
+59
+ <p class="name">Ken Bosh</p>
+ <span class="position">Manager</span>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ </section>
+ <footer class=" ftco-footer ftco-bg-dark ftco-section d-flex justify-content-evenly" style="">
+<div class="d-flex flex-column">
+ <div class=" d-flex ">
+<div class=" col-3 ftco-footer-widget mb-5 ml-5">
+<h2 style="text-align: center; " class="ftco-heading-2
+logo">H<span>HR</span></h2>
+<p style="">Your heart rate is an important indicator of your
+overall health too. When your heart rate is too fast or too slow, that can be a sign of heart or other
+health problems.</p>
+</div>
+<div class="ftco-footer-widget text-center d-flex flex-column justifycontent-center" style="" >
+<h2 style="text-align: center; color:royalblue" class="ftcoheading-2">Have a Questions?</h2>
+<!-- <ul> -->
+<p><a href="#"></a><span class="icon icon-map-marker"
+style="color: red;"></span><span style="text-align: center; color:" class="ml-3">L.B Nagar
+Snehapuri Colony, Hyderabad, Telangana </span></p>
+<p><a><span class="icon icon-phone" style="color:
+green;"></span><span style="text-align: center;" class="text ml-3">085558
+87986</span></a></p>
+60
+<p ><a><span class="icon icon-envelope" style="color:
+yellow;"></span><span style="text-align: center;" class="text ml3">projects@codebook.in</span></a></p>
+<!-- </ul> -->
+</div>
+<div class="col-4 text-center" >
+<div class="ftco-footer-widget" style="">
+<h2 style="color: royalblue; text-align: center;"
+class="ftco-heading-2">Links</h2>
+<ul class="list-unstyled">
+<li style="text-align: center;"><a href="{% url 'home'
+%}"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
+<li style="text-align: center;"><a href="{% url 'login'
+%}"><span class="ion-ios-arrow-round-forward mr-2"></span>User</a></li>
+<li style="text-align: center;"><a href="{% url 'admin'
+%}"><span class="ion-ios-arrow-round-forward mr-2"></span>Admin</a></li>
+<li style="text-align: center;"><a href="{% url 'about'
+%}"><span class="ion-ios-arrow-round-forward mr-2"></span>About</a></li>
+<li style="text-align: center;"><a href="{% url 'contact'
+%}"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li>
+</ul>
+</div>
+</div>
+</div>
+<!-- </div> -->
+ <!-- <div class="row"> -->
+<div class=" text-center"><br><br>
+
+ <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC
+BY 3.0. -->
+Copyright &copy;<script>document.write(new
+Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-
+61
+heart" style="color: red;" aria-hidden="true"></i> by <a href="https://www.codebook.in/"
+target="_blank">codebook</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under
+CC BY 3.0. --></p>
+</div>
+</div>
+</footer>
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px"
+height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4"
+stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+<script src="{% static 'mainstatic/js/jquery.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/jquery-migrate-3.0.1.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/popper.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'mainstatic/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/jquery.stellar.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/aos.js' %}"></script>
+<script src="{% static 'mainstatic/js/jquery.animateNumber.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'mainstatic/js/jquery.timepicker.min.js' %}"></script>
+<script src="{% static 'mainstatic/js/scrollax.min.js' %}"></script>
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1J
+Y0H2s&sensor=false"></script>
+<script src="{% static 'mainstatic/js/google-map.js' %}"></script>
+<script src="{% static 'mainstatic/js/main.js' %}"></script>
+
+</body>
+ </html>
